@@ -1,0 +1,30 @@
+Given nums = [2, 7, 11, 15], target = 9,
+
+Because nums[0] + nums[1] = 2 + 7 = 9,
+return [0, 1].
+
+
+简单步骤分析：
+1. 创建hashmap， 遍历hashmap，放入算法中的数1
+2. 遍历hashmap，如果存在hashmap中有数1=（target-数2），返回数1和数2的index。
+
+**这里的map.put 必须放到if 语句后**否则输入【3，3】，6无法解决
+原因：
+在进行if语句的时候hashmap中已经存在【3，0】，那么执行if满足6-3=3，3在hashmap中且index为0，那么输出的就是【0，0】.
+
+
+public class Solution{
+public int[] twoSum(int[] nums,int target){
+    int[] result=new int[2];
+    Map<Integer,Integer> map=new HashMap<Integer,Integer>();
+    for(int x=0;x<nums.length;x++){
+        if(map.containsKey(target-nums[x])){
+            result[0]=x;
+            result[1]=map.get(target-nums[x]);
+            break;
+        }
+        map.put(nums[x],x);
+    }
+   return result;
+}
+}
