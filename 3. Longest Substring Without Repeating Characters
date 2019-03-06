@@ -1,0 +1,60 @@
+Example 1:
+
+Input: "abcabcbb"
+Output: 3 
+Explanation: The answer is "abc", with the length of 3. 
+Example 2:
+
+Input: "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+Example 3:
+
+Input: "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3. 
+             Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+             
+             
+             
+
+
+**Java:**
+https://www.youtube.com/watch?v=mtHelVTLKRQ
+
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int right=0; //右指针
+        int left=0; //左指针
+        int max=0; //计算最大substring
+        Set<Character> hs=new HashSet<>();
+        while(right<s.length()){
+            if(!hs.contains(s.charAt(right))){  //如果存在
+                hs.add(s.charAt(right++));
+                max=Math.max(max,right-left);
+            }else{
+                hs.remove(s.charAt(left));
+                left++;
+            } 
+        }
+        return max;
+    }
+}
+
+
+**Pathon:**
+class Solution:
+    def lengthOfLongestSubstring(self, s):
+        dic,start,end={},0,0
+        for index,char in enumerate(s):
+            #验证当前字母是否重复
+            if char in dic:
+                #不重复字母的长度
+                end=max(end,index-start)
+                #发现重复字母，把start重置
+                start=max(start,dic[char]+1)
+            #把不重复的字母都丢到dic里面
+            dic[char]=index
+        #最终结果取最长的不重复的字母组长度
+*         return max(end,len(s)-start)
